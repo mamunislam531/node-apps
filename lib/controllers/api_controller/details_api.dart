@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class DetailsServices {
-  List<ProductDetailsModel> data=[];
-   void getData() async {
+  static Future<Object>getData() async {
     try{
       Response response = await http.get(Uri.parse(
           "https://cit-ecommerce-codecanyon.bandhantrade.com/api/app/v1/products"));
@@ -15,18 +14,17 @@ class DetailsServices {
       if(response.statusCode==200){
         List<dynamic> jsonList=jsonDecode(response.body)["products"];
         log("Data: ${jsonList.runtimeType}");
-        data=jsonList.map((e)=>ProductDetailsModel.fromJson(e)).toList();
+        List<ProductDetailsModel> data=jsonList.map((e)=>ProductDetailsModel.fromJson(e)).toList();
         log("Data: ${data.runtimeType}");
-
+        return data;
       }
-      else{
-       throw Exception("");
 
-      }
     }
     catch (e){
       log("Error: $e");
+
     }
 
+   return "jd";
   }
 }

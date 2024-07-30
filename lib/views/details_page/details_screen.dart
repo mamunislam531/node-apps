@@ -12,10 +12,9 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  DetailsServices detailsServices=DetailsServices();
   @override
   void initState() {
-    detailsServices.getData();
+    DetailsServices.getData();
     super.initState();
   }
   @override
@@ -24,7 +23,21 @@ class _DetailScreenState extends State<DetailScreen> {
       appBar: AppBar(
         title: Text("Product Details"),
       ),
-      body: FutureBuilder(future: detailsServices.data, builder: builder)
+      body: FutureBuilder(future: DetailsServices.getData(), builder: (context,snapshot){
+
+        var data=snapshot.data();
+        return GridView.builder(
+            itemCount: data.lenth,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), itemBuilder: (context,index){
+          return Card(
+            child: Column(
+              children: [
+                Text("Name: ")
+              ],
+            ),
+          );
+        });
+      })
     );
   }
 }
